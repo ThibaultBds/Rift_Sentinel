@@ -1,102 +1,111 @@
 from collections import Counter
 
+
 def calculate_winrate(matches):
-	total_games = len(matches)
+    total_games = len(matches)
 
-	if total_games == 0:
-		return 0
+    if total_games == 0:
+        return 0
 
-	wins = 0
+    wins = 0
 
-	for match in matches:
-		if match["result"].lower() == "win"
-			win +=1
+    for match in matches:
+        if match["result"].lower() == "win":
+            wins += 1
 
-	return round((wins / total_games) * 100, 2)
+    return round((wins / total_games) * 100, 2)
+
 
 def calculate_average(matches, key):
-	if len(matches) == 0:
-		return 0
+    if len(matches) == 0:
+        return 0
 
-	total = 0
+    total = 0
 
-	for match in matches:
-		total += match[key]
+    for match in matches:
+        total += match[key]
 
-	return round(total / len(matches), 2)
+    return round(total / len(matches), 2)
+
 
 def get_most_played_champions(matches, limit=3):
-	champions = []
+    champions = []
 
-	for match in matches:
-		champions.append(match["champion"])
+    for match in matches:
+        champions.append(match["champion"])
 
-	champion_counter = Counter(champions)
+    champion_counter = Counter(champions)
 
-	return champion_counter.most_common(limit)
+    return champion_counter.most_common(limit)
 
-def detect_main_issues(matches)
-	average_deaths = calculate_average(matches, "deaths")
-	average_vision = calculate_average(matches, "vision_score")
-	average_cs = calculate_average(matches, "cs_per_min")
 
-	if average_deaths >= 7:
-		return "Too many deaths. You give too much pressure to the ennemy team."
-	
-	if average_vision < 18:
-		return "Low vision score. You probably play with poor map control." 
+def detect_main_issue(matches):
+    average_deaths = calculate_average(matches, "deaths")
+    average_vision = calculate_average(matches, "vision_score")
+    average_cs = calculate_average(matches, "cs_per_min")
 
-	if average_cs < 5.5: 
-		return "Low CS per minute. Your economy is probably too weak."
+    if average_deaths >= 7:
+        return "Too many deaths. You give too much pressure to the enemy team."
 
-	return "No critical issue detected." 
+    if average_vision < 18:
+        return "Low vision score. You probably play with poor map control."
 
-def calculated_tilt_risk(matches):
-	recent_matches = matches[-5:]
+    if average_cs < 5.5:
+        return "Low CS per minute. Your economy is probably too weak."
 
-	losses = 0
+    return "No critical issue detected."
 
-	for match in recent_matches: 
-		if match["result"].lower() == "loss":
-			losses += 1
 
-	averages_deaths = calculate_average(recent_matches, "deaths")
+def calculate_tilt_risk(matches):
+    recent_matches = matches[-5:]
 
-	recent_champions = []
+    losses = 0
 
-	for match in recent_matches: 
-		recent_champions.append(match["champion"])
+    for match in recent_matches:
+        if match["result"].lower() == "loss":
+            losses += 1
 
-	different_champions = len(set(recent_champions))
+    average_deaths = calculate_average(recent_matches, "deaths")
 
-	risk_score = 0
+    recent_champions = []
 
-	if losses >= 3:
-		risk_score += 2
+    for match in recent_matches:
+        recent_champions.append(match["champion"])
 
-	if average_deaths >= 7:
-		risk_score += 1
+    different_champions = len(set(recent_champions))
 
-	if risk_score >= 4:
-		return "HIGH"
+    risk_score = 0
 
-	if risk_score >= 2:
-		return "MEDIUM"
+    if losses >= 3:
+        risk_score += 2
 
-	return "LOL"
+    if average_deaths >= 7:
+        risk_score += 2
+
+    if different_champions >= 4:
+        risk_score += 1
+
+    if risk_score >= 4:
+        return "HIGH"
+
+    if risk_score >= 2:
+        return "MEDIUM"
+
+    return "LOW"
+
 
 def analyze_matches(matches):
-	analyzis = {
-		"total_games": len(matches),
-		"winrate": calculate_winrates(matches),
-		"average_kills": calculate_average(matches, "kills"),
-		"average_deaths": calculate_average(matches, "deaths"),
-		"average_assists": calculate_average(matches, "assists"),
-		"average_cs_per_min": calculate_average(matches, "cs_per_min"),
-		"average_vision_score": calculater_average(matches, "vission_score"),
-		"most_played_champions": get_most_played_champions(matches),
-		"main_issue": detect_main_issue(matches),
-		"tilt_risk": calculate_tilt_risk(matches)
-	}
+    analysis = {
+        "total_games": len(matches),
+        "winrate": calculate_winrate(matches),
+        "average_kills": calculate_average(matches, "kills"),
+        "average_deaths": calculate_average(matches, "deaths"),
+        "average_assists": calculate_average(matches, "assists"),
+        "average_cs_per_min": calculate_average(matches, "cs_per_min"),
+        "average_vision_score": calculate_average(matches, "vision_score"),
+        "most_played_champions": get_most_played_champions(matches),
+        "main_issue": detect_main_issue(matches),
+        "tilt_risk": calculate_tilt_risk(matches)
+    }
 
-	return analysis
+    return analysis
