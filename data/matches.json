@@ -1,0 +1,42 @@
+[
+  {
+    "champion": "Viego",
+    "role": "Jungle",
+    "result": "win",
+    "kills": 9,
+    "deaths": 4,
+    "assists": 8,
+    "cs_per_min": 6.2,
+    "vision_score": 24
+  },
+  {
+    "champion": "Kayn",
+    "role": "Jungle",
+    "result": "loss",
+    "kills": 6,
+    "deaths": 9,
+    "assists": 5,
+    "cs_per_min": 5.4,
+    "vision_score": 17
+  },
+  {
+    "champion": "Thresh",
+    "role": "Support",
+    "result": "loss",
+    "kills": 1,
+    "deaths": 8,
+    "assists": 14,
+    "cs_per_min": 1.2,
+    "vision_score": 39
+  },
+  {
+    "champion": "Viego",
+    "role": "Jungle",
+    "result": "loss",
+    "kills": 7,
+    "deaths": 10,
+    "assists": 6,
+    "cs_per_min": 5.8,
+    "vision_score": 18
+  }
+] "
