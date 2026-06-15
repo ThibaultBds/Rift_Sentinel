@@ -1,5 +1,6 @@
 from collections import Counter
 
+# Calculate the percentage of games won
 
 def calculate_winrate(matches):
     total_games = len(matches)
@@ -15,6 +16,21 @@ def calculate_winrate(matches):
 
     return round((wins / total_games) * 100, 2)
 
+def calculate_average_kda(matches):
+	total_kda = 0
+
+	for match in matches:
+		kills = match["kills"]
+		assists = match["assists"]
+		deaths = match["deaths"]
+
+		if deaths == 0: 
+			deaths = 1
+
+		kda = (kills + assists) / deaths
+		total_kda += kda
+
+	return round(total_kda / len(matches), 2)
 
 def calculate_average(matches, key):
     if len(matches) == 0:
@@ -104,6 +120,7 @@ def analyze_matches(matches):
         "average_cs_per_min": calculate_average(matches, "cs_per_min"),
         "average_vision_score": calculate_average(matches, "vision_score"),
         "most_played_champions": get_most_played_champions(matches),
+	"average_kda": calculate_average_kda(matches),
         "main_issue": detect_main_issue(matches),
         "tilt_risk": calculate_tilt_risk(matches)
     }

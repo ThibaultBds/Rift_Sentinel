@@ -12,6 +12,8 @@ def build_report(analysis):
     lines.append(f"Kills: {analysis['average_kills']}")
     lines.append(f"Deaths: {analysis['average_deaths']}")
     lines.append(f"Assists: {analysis['average_assists']}")
+    
+    lines.append(f"Average KDA: {analysis['average_kda']}")
     lines.append(f"CS/min: {analysis['average_cs_per_min']}")
     lines.append(f"Vision score: {analysis['average_vision_score']}")
     lines.append("")
