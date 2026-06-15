@@ -16,17 +16,22 @@ def load_matches(file_path):
 
 
 def main():
-    if len(sys.argv) > 1:
-        file_path = sys.argv[1]
-    else:
-        file_path = "data/matches.json"
+    if len(sys.argv) != 2:
+        print("Usage: python3 -m Rift_Sentinel.main data/matches.json")
+        return
 
-    matches = load_matches(file_path)
+    file_path = sys.argv[1]
+
+    try:
+        matches = load_matches(file_path)
+    except FileNotFoundError:
+        print(f"Error: file not found: {file_path}")
+        return
+
     analysis = analyze_matches(matches)
     report = build_report(analysis)
 
     print(report)
-
 
 if __name__ == "__main__":
     main()
